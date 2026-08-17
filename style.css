@@ -1273,7 +1273,7 @@ footer strong {
 footer small {
 
     font-size:
-    px;
+    12px;
 
 }
 
@@ -1416,7 +1416,7 @@ footer small {
    ========================================= */
 
 html {
-    background-image: url("html/img/â__Slidesdocsâ__dorado negocio acuarela elegante motivación_d4b1c4a7e6.jpg");
+    background-image: url("img/#U00e2__Slidesdocs#U00e2__dorado negocio acuarela elegante motivaci#U00f3n_d4b1c4a7e6.jpg");
     background-size: cover;
     background-position: center top;
     background-repeat: repeat-y;
@@ -1427,3 +1427,43 @@ body {
     background: transparent;
 }
 
+
+
+/* =========================================
+   BOTONES · ESTILO UNIFICADO
+========================================= */
+
+.boton,
+.boton-azul {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 130px;
+    height: 36px;
+    padding: 0 18px;
+    background: #76508b;
+    color: #fff !important;
+    border: none;
+    border-radius: 0;
+    text-decoration: none !important;
+    font-family: "DM Sans", sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: transform .25s ease, background .25s ease;
+}
+
+.boton:hover,
+.boton-azul:hover {
+    background: #68467c;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+    .boton,
+    .boton-azul {
+        min-width: 130px;
+    }
+}

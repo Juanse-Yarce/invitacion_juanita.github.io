@@ -19,7 +19,7 @@
 
     <!-- =====================================================
          MENÚ
-    ====================================================== -->s
+    ====================================================== -->
 
     <header class="menu">
 
@@ -65,19 +65,16 @@
     </video>
 
 
-    <!-- MÚSICA -->
-    <audio
-        id="musicaFondo"
-        loop
-        preload="auto"
-    >
-        <source src="musica.mp3" type="audio/mpeg">
-    </audio>
+    <!-- BOTÓN DE APERTURA -->
+    <div class="contenido-portada">
 
+        <button class="boton-abrir" id="abrirInvitacion" type="button">
+            ABRIR INVITACIÓN
+            <span class="flecha">↓</span>
+        </button>
 
-    <!-- BOTÓN -->
+    </div>
 
-   
 </section>
 
 
@@ -521,159 +518,128 @@
     ====================================================== -->
 
     <script>
-
         /* ==========================================
            ANIMACIÓN DE TARJETAS
         ========================================== */
 
-        const tarjetas =
-            document.querySelectorAll(".reveal");
+        const tarjetas = document.querySelectorAll(".reveal");
 
-        const observer =
-            new IntersectionObserver(
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    } else {
+                        entry.target.classList.remove("visible");
+                    }
+                });
+            }, { threshold: 0.15 });
 
-                (entries) => {
-
-                    entries.forEach((entry) => {
-
-    if (entry.isIntersecting) {
-
-        entry.target.classList.add("visible");
-
-    } else {
-
-        entry.target.classList.remove("visible");
-
-    }
-
-});
-
-                },
-
-                {
-                    threshold: 0.15
-                }
-
-            );
-
-        tarjetas.forEach((tarjeta) => {
-
-            observer.observe(tarjeta);
-
-        });
-
+            tarjetas.forEach((tarjeta) => observer.observe(tarjeta));
+        } else {
+            tarjetas.forEach((tarjeta) => tarjeta.classList.add("visible"));
+        }
 
 
         /* ==========================================
            CUENTA REGRESIVA
         ========================================== */
 
-        const fechaEvento =
-            new Date("Octubre 31, 2026 19:00:00").getTime();
-
+        const fechaEvento = new Date("2026-10-31T19:00:00").getTime();
 
         function actualizarContador() {
+            const distancia = fechaEvento - Date.now();
 
-            const ahora =
-                new Date().getTime();
+            const dias = document.getElementById("dias");
+            const horas = document.getElementById("horas");
+            const minutos = document.getElementById("minutos");
+            const segundos = document.getElementById("segundos");
 
-            const distancia =
-                fechaEvento - ahora;
+            if (!dias || !horas || !minutos || !segundos) return;
 
+            if (distancia <= 0) {
+                dias.textContent = "00";
+                horas.textContent = "00";
+                minutos.textContent = "00";
+                segundos.textContent = "00";
+                return;
+            }
 
-            const dias =
-                Math.floor(
-                    distancia /
-                    (1000 * 60 * 60 * 24)
-                );
-
-            const horas =
-                Math.floor(
-                    (distancia %
-                    (1000 * 60 * 60 * 24)) /
-                    (1000 * 60 * 60)
-                );
-
-            const minutos =
-                Math.floor(
-                    (distancia %
-                    (1000 * 60 * 60)) /
-                    (1000 * 60)
-                );
-
-            const segundos =
-                Math.floor(
-                    (distancia %
-                    (1000 * 60)) /
-                    1000
-                );
-
-
-            document.getElementById("dias")
-                .textContent =
-                String(Math.max(dias,0))
-                .padStart(2,"0");
-
-            document.getElementById("horas")
-                .textContent =
-                String(Math.max(horas,0))
-                .padStart(2,"0");
-
-            document.getElementById("minutos")
-                .textContent =
-                String(Math.max(minutos,0))
-                .padStart(2,"0");
-
-            document.getElementById("segundos")
-                .textContent =
-                String(Math.max(segundos,0))
-                .padStart(2,"0");
-
+            dias.textContent = String(Math.floor(distancia / 86400000)).padStart(2, "0");
+            horas.textContent = String(Math.floor((distancia % 86400000) / 3600000)).padStart(2, "0");
+            minutos.textContent = String(Math.floor((distancia % 3600000) / 60000)).padStart(2, "0");
+            segundos.textContent = String(Math.floor((distancia % 60000) / 1000)).padStart(2, "0");
         }
 
         actualizarContador();
-
-        setInterval(
-            actualizarContador,
-            1000
-        );
-
+        setInterval(actualizarContador, 1000);
 
 
         /* ==========================================
            MÚSICA
         ========================================== */
 
-        const musica =
-            document.getElementById("musica");
+        const musica = document.getElementById("musica");
+        const play = document.getElementById("play");
+        const botonAbrir = document.getElementById("abrirInvitacion");
+        const bienvenida = document.getElementById("bienvenida");
 
-        const play =
-            document.getElementById("play");
+        function reproducirMusica() {
+            if (!musica) return;
 
+            musica.volume = 0.30;
 
-        play.addEventListener(
-            "click",
-            () => {
+            const promesa = musica.play();
 
-                if (musica.paused) {
-
-                    musica.play();
-
-                    play.textContent = "❚❚";
-
-                } else {
-
-                    musica.pause();
-
-                    play.textContent = "▶";
-
-                }
-
+            if (promesa !== undefined) {
+                promesa.then(() => {
+                    if (play) play.textContent = "❚❚";
+                }).catch(() => {
+                    /* El navegador puede bloquear audio si no hubo interacción. */
+                });
             }
-        );
+        }
 
+        if (play && musica) {
+            play.addEventListener("click", () => {
+                if (musica.paused) {
+                    reproducirMusica();
+                } else {
+                    musica.pause();
+                    play.textContent = "▶";
+                }
+            });
+
+            musica.addEventListener("play", () => {
+                play.textContent = "❚❚";
+            });
+
+            musica.addEventListener("pause", () => {
+                play.textContent = "▶";
+            });
+        }
+
+
+        /* ==========================================
+           ABRIR INVITACIÓN
+        ========================================== */
+
+        if (botonAbrir) {
+            botonAbrir.addEventListener("click", () => {
+
+                // El clic del usuario permite iniciar el audio en el navegador.
+                reproducirMusica();
+
+                // La portada NO desaparece: simplemente bajamos al contenido.
+                if (bienvenida) {
+                    bienvenida.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            });
+        }
     </script>
-
 
 </body>
 </html>
