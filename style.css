@@ -1,0 +1,1429 @@
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+
+    --lila: #9b78c7;
+    --lila-oscuro: #73518c;
+    --lila-claro: #C8A2C8;
+
+    --rosa: #C8A2C8;
+    --rosa-claro: #f8e9ef;
+
+    --azul: #73518c;
+
+    --texto: #050505;
+
+    --blanco: #E6E6FA;
+
+    --sombra:
+        0 6px 18px
+        rgba(65, 54, 70, 0.20);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+body {
+
+    font-family:
+        "DM Sans",
+        sans-serif;
+
+    color: var(--texto);
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+
+    /* Fondo tipo acuarela */
+
+    background:
+
+        radial-gradient(
+            ellipse at 5% 20%,
+            rgba(201, 226, 228, .80),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            ellipse at 95% 30%,
+            rgba(245, 220, 233, .70),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            ellipse at 15% 80%,
+            rgba(226, 210, 244, .70),
+            transparent 30%
+        ),
+
+        #f8f7f7;
+
+}
+
+
+/* manchas decorativas */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    left: -220px;
+    top: 20%;
+
+    background:
+        rgba(196, 222, 224, .65);
+
+    border-radius: 50%;
+
+    filter: blur(50px);
+
+    z-index: -1;
+
+}
+
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    right: -230px;
+    bottom: 10%;
+
+    background:
+        rgba(235, 207, 228, .60);
+
+    border-radius: 50%;
+
+    filter: blur(50px);
+
+    z-index: -1;
+
+}
+
+
+/* =========================================================
+   MENÚ
+========================================================= */
+
+.menu {
+
+    position: fixed;
+
+    top: 15px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(650px, calc(100% - 30px));
+
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0 22px;
+
+    background:
+        rgba(255,255,255,.88);
+
+    border-radius: 30px;
+
+    backdrop-filter:
+        blur(15px);
+
+    box-shadow:
+        0 8px 30px
+        rgba(70,55,75,.12);
+
+    z-index: 1000;
+
+}
+
+
+.logo {
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    color:
+        var(--lila-oscuro);
+
+    letter-spacing:
+        .18em;
+
+    font-size:
+        12px;
+
+}
+
+
+.menu nav {
+
+    display: flex;
+
+    gap: 20px;
+
+}
+
+
+.menu nav a {
+
+    color:
+        #79727c;
+
+    text-decoration:
+        none;
+
+    font-size:
+        11px;
+
+    transition:
+        .3s;
+
+}
+
+
+.menu nav a:hover {
+
+    color:
+        var(--lila);
+
+}
+
+
+/* =========================================================
+   CONTENEDOR
+========================================================= */
+
+.contenedor {
+
+    width:
+        min(560px, calc(100% - 20px));
+
+    margin:
+        auto;
+
+    padding:
+        85px 0 60px;
+
+}
+
+
+/* =========================================================
+   TARJETAS
+========================================================= */
+
+.tarjeta {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    margin-bottom:
+        26px;
+
+    background:
+        var(--blanco);
+
+    box-shadow:
+        var(--sombra);
+
+    border:
+        1px solid
+        rgba(220,215,220,.8);
+
+    overflow:
+        hidden;
+
+}
+
+
+/* borde de papel */
+
+.tarjeta::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    bottom:
+        -1px;
+
+    left:
+        -2%;
+
+    width:
+        104%;
+
+    height:
+        13px;
+
+    background:
+        #ffffff;
+
+    clip-path:
+        polygon(
+            0 50%,
+            7% 20%,
+            15% 52%,
+            23% 22%,
+            31% 51%,
+            39% 20%,
+            47% 52%,
+            55% 25%,
+            63% 52%,
+            71% 20%,
+            80% 52%,
+            89% 24%,
+            100% 50%,
+            100% 100%,
+            0 100%
+        );
+
+}
+
+
+/* esquina doblada */
+
+.tarjeta::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    right:
+        0;
+
+    width:
+        35px;
+
+    height:
+        35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent 49%,
+            #e9e4ea 50%,
+            #fff 51%
+        );
+
+    z-index:
+        5;
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN DE TARJETAS
+========================================================= */
+
+.reveal {
+
+    opacity:
+        0;
+
+    transform:
+        translateY(80px)
+        scale(.96)
+        rotateX(5deg);
+
+    transition:
+
+        opacity .9s
+        cubic-bezier(.16,1,.3,1),
+
+        transform 1s
+        cubic-bezier(.16,1,.3,1);
+
+}
+
+
+.reveal.visible {
+
+    opacity:
+        1;
+
+    transform:
+        translateY(0)
+        scale(1)
+        rotateX(0);
+
+}
+
+
+/* =========================================================
+   CONTENIDO
+========================================================= */
+
+.contenido {
+
+    padding:
+        58px 45px 65px;
+
+    text-align:
+        center;
+
+}
+
+
+.titulo-manuscrito {
+
+    display:
+        block;
+
+    color:
+        var(--azul);
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size:
+        40px;
+
+    line-height:
+        1;
+
+}
+
+
+h2 {
+
+    margin-top:
+        12px;
+
+    color:
+        #6e6871;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-style:
+        italic;
+
+    font-weight:
+        400;
+
+    font-size:
+        27px;
+
+}
+
+
+p {
+
+    max-width:
+        430px;
+
+    margin:
+        0px auto;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.adorno {
+
+    margin:
+        20px 0;
+
+    color:
+        var(--rosa);
+
+    font-size:
+        20px;
+
+}
+
+
+/* =========================================================
+   PORTADA
+========================================================= */
+.portada {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 670px;
+    overflow: hidden;
+}
+
+
+/* VIDEO */
+
+.video-portada {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    z-index: 0;
+}
+
+
+/* CONTENIDO DEL BOTÓN */
+
+.contenido-portada {
+    position: absolute;
+    inset: 0;
+
+    z-index: 2;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    padding-bottom: 45px;
+}
+
+
+/* BOTÓN LILA */
+
+.boton-abrir {
+    border: none;
+
+    background: #76508b;
+    color: white;
+
+    padding: 14px 25px;
+
+    min-width: 168px;
+
+    border-radius: 30px;
+
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .5px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px rgba(118, 80, 139, .30);
+
+    transition: .3s ease;
+}
+
+
+.boton-abrir:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 30px rgba(118, 80, 139, .40);
+}
+
+
+/* FLECHA */
+
+.flecha {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+/* =========================================================
+   ROSAS
+========================================================= */
+
+.rosa {
+
+    position:
+        absolute;
+
+    font-size:
+        75px;
+
+    opacity:
+        .3;
+
+    animation:
+        flotar 7s
+        ease-in-out
+        infinite;
+
+}
+
+
+.rosa-1 {
+
+    left:
+        20px;
+
+    bottom:
+        45px;
+
+    transform:
+        rotate(-25deg);
+
+}
+
+
+.rosa-2 {
+
+    right:
+        20px;
+
+    top:
+        80px;
+
+    transform:
+        rotate(25deg);
+
+    animation-delay:
+        -3s;
+
+}
+
+
+@keyframes flotar {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0)
+            rotate(-20deg);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-14px)
+            rotate(-14deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   CONTADOR
+========================================================= */
+
+.contador {
+
+    background:
+        linear-gradient(
+            145deg,
+            #8e6caf,
+            #b99bd2
+        );
+
+}
+
+
+.contador .titulo-manuscrito,
+.contador h2 {
+
+    color:
+        white;
+
+}
+
+
+.contador-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:
+        7px;
+
+    margin-top:
+        30px;
+
+}
+
+
+.contador-grid div {
+
+    padding:
+        18px 4px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    border:
+        1px solid
+        rgba(255,255,255,.35);
+
+    border-radius:
+        8px;
+
+}
+
+
+.contador-grid strong {
+
+    display:
+        block;
+
+    color:
+        white;
+
+    font-size:
+        27px;
+
+    font-weight:
+        400;
+
+}
+
+
+.contador-grid span {
+
+    color:
+        white;
+
+    font-size:
+        7px;
+
+    letter-spacing:
+        .1em;
+
+}
+
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+.icono {
+
+    margin:
+        25px 0 15px;
+
+    font-size:
+        55px;
+
+    filter:
+        grayscale(1);
+
+    opacity:
+        .35;
+
+}
+
+
+.contenido h3 {
+
+    color:
+        #77727a;
+
+    font-size:
+        16px;
+
+    font-weight:
+        400;
+
+}
+
+
+.acciones {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    margin-top:
+        30px;
+
+}
+
+
+.hora {
+
+    min-width:
+        120px;
+
+    height:
+        37px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        #d6d3d7;
+
+    font-size:
+        12px;
+
+}
+
+
+.boton-azul {
+
+    min-width:
+        120px;
+
+    min-height:
+        37px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        0 18px;
+
+    background:
+        var(--azul);
+
+    border:
+        1px solid
+        var(--azul);
+
+    color:
+        white;
+
+    text-decoration:
+        none;
+
+    font-size:
+        12px;
+
+    transition:
+        .3s;
+
+}
+
+
+.boton-azul:hover {
+
+    transform:
+        translateY(-3px);
+
+    filter:
+        brightness(.95);
+
+}
+
+
+/* =========================================================
+   DRESS CODE
+========================================================= */
+
+
+.dress-code {
+    width: 100%;
+    padding: 35px 20px 40px;
+    text-align: center;
+}
+
+
+/* =========================================
+   TÍTULO ADULTOS / JÓVENES
+========================================= */
+
+.dress-group {
+    width: 100%;
+    max-width: 390px;
+    margin: 0 auto 20px;
+}
+
+
+/* Adultos / Jóvenes */
+
+.dress-category {
+    margin: 0 0 20px !important;
+    text-align: center !important;
+
+    font-family: "Playfair Displays", serif !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+
+    font-size: 27px !important;
+    line-height: 1.2 !important;
+
+    color: #76508b !important;
+}
+
+
+/* =========================================
+   MUJERES / HOMBRES
+========================================= */
+
+.dress-columns {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 100px;
+
+    width: 100%;
+}
+
+
+.dress-option {
+    text-align: center;
+}
+
+
+/* Mujeres / Hombres */
+
+.dress-option h4 {
+    margin: 0 0 4px;
+
+    /* MISMA TIPOGRAFÍA DEL TEXTO
+       PRINCIPAL DE LA INVITACIÓN */
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    color: #40364a;
+}
+
+
+/* Vestido largo / Traje formal */
+
+.dress-option p {
+    margin: 0;
+
+    /* MISMA TIPOGRAFÍA MANUSCRITA */
+
+    font-family: "DM Sans", cursive;
+
+    font-size: 12px;
+
+    line-height: 1.3;
+
+    color: #000000;
+}
+
+
+/* =========================================
+   NOTA
+========================================= */
+
+.dress-note {
+    width: 100%;
+    max-width: 390px;
+
+    margin: 10px auto 0;
+
+    padding: 25px 15px 5px;
+
+    text-align: center;
+
+    border-top: 1px solid rgba(118, 80, 139, .15);
+}
+
+
+.dress-note h3 {
+
+    margin: 0 0 0.9px;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 3;
+
+    color: #40364a;
+}
+
+
+.dress-note p {
+
+    max-width: 350px;
+
+    margin: auto;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 11px;
+
+    line-height: 1.3;
+
+    color: #000000;
+}
+
+
+/* =========================================================
+   RECOMENDACIONES
+========================================================= */
+
+.recomendaciones {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        20px;
+
+    margin-top:
+        35px;
+
+}
+
+
+.reco-icon {
+
+    font-size:
+        35px;
+
+    opacity:
+        .45;
+
+    filter:
+        grayscale(1);
+
+}
+
+
+.recomendaciones span {
+
+    display:
+        block;
+
+    margin-top:
+        10px;
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size:
+        20px;
+
+}
+
+
+/* =========================================================
+   MÚSICA
+========================================================= */
+
+.reproductor {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        18px;
+
+    max-width:
+        390px;
+
+    margin:
+        30px auto 0;
+
+    padding:
+        15px;
+
+    border:
+        1px solid
+        #eee8ef;
+
+    border-radius:
+        14px;
+
+    text-align:
+        left;
+
+}
+
+
+.reproductor button {
+
+    width:
+        52px;
+
+    height:
+        52px;
+
+    flex-shrink:
+        0;
+
+    border:
+        none;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--lila-oscuro);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+}
+
+
+.reproductor strong {
+
+    display:
+        block;
+
+    font-size:
+        13px;
+
+}
+
+
+.reproductor span {
+
+    display:
+        block;
+
+    margin-top:
+        5px;
+
+    color:
+        #aaa4aa;
+
+    font-size:
+        10px;
+
+}
+
+
+
+/* =========================================================
+   CONFIRMACIÓN
+========================================================= */
+
+/* ==========================================
+   BOTONES DE LA INVITACIÓN
+   ========================================== */
+
+.boton,
+.boton-azul,
+.acciones .boton,
+.acciones .boton-azul {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 150px;
+    height: 36px;
+
+    padding: 0;
+
+    background: #76508b;
+    color: #ffffff !important;
+
+    border: none;
+    border-radius: 6;
+
+    text-decoration: none !important;
+
+    font-family: "DM Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Efecto al pasar el mouse */
+.boton:hover,
+.boton-azul:hover {
+    background: #68467c;
+    transform: translateY(-1px);
+}
+
+/* Si el botón está dentro de acciones */
+.acciones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    padding:
+        30px 0 70px;
+
+    text-align:
+        center;
+
+    color:
+        #99919c;
+
+}
+
+
+footer span {
+
+    font-family:
+        "Great Vibes",
+        cursive;
+
+    font-size:
+        30px;
+
+}
+
+
+footer strong {
+
+    color:
+        var(--lila-oscuro);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+}
+
+
+footer small {
+
+    font-size:
+    px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:600px) {
+
+    .menu {
+
+        width:
+            calc(100% - 20px);
+
+    }
+
+
+    .menu nav {
+
+        display:
+            none;
+
+    }
+
+
+    .contenedor {
+
+        width:
+            calc(100% - 16px);
+
+        padding-top:
+            80px;
+
+    }
+
+
+    .portada {
+
+        min-height:
+            650px;
+
+    }
+
+
+    .contenido {
+
+        padding:
+            48px 22px 58px;
+
+    }
+
+
+    .numero {
+
+        font-size:
+            90px;
+
+    }
+
+
+    .portada h1 {
+
+        font-size:
+            54px;
+
+    }
+
+
+    .titulo-manuscrito {
+
+        font-size:
+            36px;
+
+    }
+
+
+    .contador-grid {
+
+        gap:
+            4px;
+
+    }
+
+
+    .contador-grid div {
+
+        padding:
+            14px 2px;
+
+    }
+
+
+    .contador-grid strong {
+
+        font-size:
+            21px;
+
+    }
+
+
+    .contador-grid span {
+
+        font-size:
+            6px;
+
+    }
+
+
+    .acciones {
+
+        flex-direction:
+            row;
+
+    }
+
+
+    .hora,
+    .boton-azul {
+
+        min-width:
+            105px;
+
+    }
+
+
+    .galeria {
+
+        grid-auto-rows:
+            145px;
+
+    }
+
+}
+
+
+
+/* =========================================
+   FONDO GENERAL DE LA INVITACIÓN
+   ========================================= */
+
+html {
+    background-image: url("html/img/â__Slidesdocsâ__dorado negocio acuarela elegante motivación_d4b1c4a7e6.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: repeat-y;
+    background-attachment: fixed;
+}
+
+body {
+    background: transparent;
+}
+
